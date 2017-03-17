@@ -6,15 +6,15 @@ module Data.Decimal
   , fromNumber
   , toString
   , toNumber
+  , toSignificantDigits
   , abs
-  , pow
   , acos
   , acosh
   , asin
   , asinh
   , atan
-  , atanh
   , atan2
+  , atanh
   , ceil
   , cos
   , cosh
@@ -24,6 +24,7 @@ module Data.Decimal
   , log10
   , max
   , min
+  , pow
   , round
   , sin
   , sinh
@@ -108,8 +109,8 @@ instance euclideanRingDecimal ∷ EuclideanRing Decimal where
   mod _ _ = zero
   degree _ = one
 
--- | Exponentiation for `Decimal`.
-foreign import pow ∷ Decimal → Decimal → Decimal
+-- | Round to the given number of significant digits.
+foreign import toSignificantDigits ∷ Int → Decimal → Decimal
 
 -- | The absolute value.
 foreign import abs ∷ Decimal → Decimal
@@ -130,10 +131,10 @@ foreign import asinh ∷ Decimal → Decimal
 foreign import atan ∷ Decimal → Decimal
 
 -- | Inverse hyperbolic tangent.
-foreign import atanh ∷ Decimal → Decimal
+foreign import atan2 ∷ Decimal → Decimal → Decimal
 
 -- | Inverse hyperbolic tangent.
-foreign import atan2 ∷ Decimal → Decimal → Decimal
+foreign import atanh ∷ Decimal → Decimal
 
 -- | Rounded to next whole number in the direction of `+inf`.
 foreign import ceil ∷ Decimal → Decimal
@@ -164,6 +165,9 @@ foreign import max ∷ Decimal → Decimal → Decimal
 
 -- | The smaller of two numbers.
 foreign import min ∷ Decimal → Decimal → Decimal
+
+-- | Exponentiation for `Decimal`.
+foreign import pow ∷ Decimal → Decimal → Decimal
 
 -- | Round to the nearest whole number.
 foreign import round ∷ Decimal → Decimal

@@ -29,6 +29,12 @@ exports.toNumber = function(x) {
   return x.toNumber();
 };
 
+exports.toSignificantDigits = function(d) {
+  return function (x) {
+    return x.toSignificantDigits(d);
+  };
+};
+
 exports.dAdd = function(x) {
   return function(y) {
     return x.add(y);

@@ -6,7 +6,8 @@ import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
-                     min, round, sin, sinh, sqrt, tan, tanh, e, pi)
+                     min, round, sin, sinh, sqrt, tan, tanh, e, pi,
+                     toSignificantDigits)
 import Data.Maybe (Maybe(..))
 import Test.Assert (ASSERT, assert)
 import Control.Monad.Eff.Random (RANDOM())
@@ -75,6 +76,12 @@ main = do
   assert $ not (two < two)
   assert $ two >= two
   assert $ two <= two
+
+  log "toSignificantDigits"
+  let x = fromNumber 123.456789
+  assert $ toSignificantDigits 2 x == fromNumber 120.0
+  assert $ toSignificantDigits 4 x == fromNumber 123.5
+  assert $ toSignificantDigits 20 x == x
 
   log "pow should perform exponentiation"
   assert $ three `pow` four == fromInt 81
