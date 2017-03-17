@@ -4,8 +4,10 @@ module Data.Decimal
   , fromString
   , fromInt
   , fromNumber
-  , toString
   , toNumber
+  , toString
+  , toPrecision
+  , isInteger
   , toSignificantDigits
   , abs
   , acos
@@ -80,8 +82,15 @@ instance ordDecimal ∷ Ord Decimal where
       0 → EQ
       _ → LT
 
--- | A decimal representation of the `Decimal` as a `String`.
+-- | A representation of the `Decimal` as a `String`.
 foreign import toString ∷ Decimal → String
+
+-- | A representation of the `Decimal` as a `String`, rounded to the given
+-- | number of significant digits
+foreign import toPrecision ∷ Int → Decimal → String
+
+-- | Returns true if the value of this `Decimal` is a whole number.
+foreign import isInteger ∷ Decimal → Boolean
 
 instance showDecimal ∷ Show Decimal where
   show x = "(fromString \"" <> toString x <> "\")"

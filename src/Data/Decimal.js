@@ -21,12 +21,22 @@ exports.fromNumber = function(x) {
   return new Decimal(x);
 };
 
+exports.toNumber = function(x) {
+  return x.toNumber();
+};
+
 exports.toString = function(x) {
   return x.toString();
 };
 
-exports.toNumber = function(x) {
-  return x.toNumber();
+exports.toPrecision = function(d) {
+  return function (x) {
+    return x.toPrecision(d);
+  };
+};
+
+exports.isInteger = function(x) {
+  return x.isInteger();
 };
 
 exports.toSignificantDigits = function(d) {
