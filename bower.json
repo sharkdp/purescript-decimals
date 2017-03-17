@@ -1,0 +1,19 @@
+{
+  "name": "purescript-decimals",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^2.5.0",
+    "purescript-maybe": "^2.1.1"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^2.0.0",
+    "purescript-assert": "^2.0.0",
+    "purescript-quickcheck": "^3.1.1",
+    "purescript-numbers": "^3.0.0"
+  }
+}
