@@ -1,5 +1,7 @@
 var Decimal = require("decimal.js");
 
+Decimal.set({ precision: 30 });
+
 exports.fromInt = function(x) {
   return new Decimal(x);
 };
@@ -200,3 +202,7 @@ exports.tan = function(x) {
 exports.tanh = function(x) {
   return x.tanh();
 };
+
+exports.e = Decimal.exp(1.0);
+
+exports.pi = new Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899');

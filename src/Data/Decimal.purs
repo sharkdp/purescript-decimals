@@ -197,9 +197,7 @@ foreign import tan ∷ Decimal → Decimal
 foreign import tanh ∷ Decimal → Decimal
 
 -- | Euler's number.
-e ∷ Decimal
-e = exp one
+foreign import e ∷ Decimal
 
 -- | Pi, the ratio of a circle's circumference to its diameter.
-pi ∷ Decimal
-pi = acos (-one)
+foreign import pi ∷ Decimal
