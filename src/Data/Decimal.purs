@@ -7,6 +7,7 @@ module Data.Decimal
   , toNumber
   , toString
   , toPrecision
+  , isFinite
   , isInteger
   , toSignificantDigits
   , abs
@@ -88,6 +89,10 @@ foreign import toString ∷ Decimal → String
 -- | A representation of the `Decimal` as a `String`, rounded to the given
 -- | number of significant digits
 foreign import toPrecision ∷ Int → Decimal → String
+
+-- | Returns true if the value of this `Decimal` is a finite number (not
+-- | infinite, not `NaN`).
+foreign import isFinite ∷ Decimal → Boolean
 
 -- | Returns true if the value of this `Decimal` is a whole number.
 foreign import isInteger ∷ Decimal → Boolean

@@ -7,7 +7,7 @@ import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, round, sin, sinh, sqrt, tan, tanh, e, pi,
-                     toSignificantDigits, isInteger)
+                     toSignificantDigits, isInteger, isFinite)
 import Data.Maybe (Maybe(..))
 import Test.Assert (ASSERT, assert)
 import Control.Monad.Eff.Random (RANDOM())
@@ -78,14 +78,19 @@ main = do
   assert $ two <= two
 
   log "toSignificantDigits"
-  let x = fromNumber 123.456789
-  assert $ toSignificantDigits 2 x == fromNumber 120.0
-  assert $ toSignificantDigits 4 x == fromNumber 123.5
-  assert $ toSignificantDigits 20 x == x
+  let a = fromNumber 123.456789
+  assert $ toSignificantDigits 2 a == fromNumber 120.0
+  assert $ toSignificantDigits 4 a == fromNumber 123.5
+  assert $ toSignificantDigits 20 a == a
 
   log "isInteger"
   assert $ isInteger (fromNumber 118327913791272.0)
   assert $ not $ isInteger (fromNumber 118327913791272.1)
+
+  log "isFinite"
+  assert $ isFinite (fromNumber 118327913791272.0)
+  assert $ not $ isFinite (fromNumber 1.0 / fromNumber 0.0)
+  assert $ not $ isFinite (sqrt $ fromNumber (-1.0))
 
   log "pow should perform exponentiation"
   assert $ three `pow` four == fromInt 81

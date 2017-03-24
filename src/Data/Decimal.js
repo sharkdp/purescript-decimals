@@ -41,6 +41,10 @@ exports.isInteger = function(x) {
   return x.isInteger();
 };
 
+exports.isFinite = function(x) {
+  return x.isFinite();
+};
+
 exports.toSignificantDigits = function(d) {
   return function (x) {
     return x.toSignificantDigits(d);
