@@ -34,7 +34,7 @@ testBinary ∷ ∀ eff. (Decimal → Decimal → Decimal)
            → QC eff Unit
 testBinary f g = quickCheck (\x y → toNumber ((fromNumber x) `f` (fromNumber y)) ≅ (x `g` y))
 
-main ∷ ∀ eff. Eff (console ∷ CONSOLE, assert ∷ ASSERT, random ∷ RANDOM, err ∷ EXCEPTION | eff) Unit
+main ∷ ∀ eff. Eff (console ∷ CONSOLE, assert ∷ ASSERT, random ∷ RANDOM, exception ∷ EXCEPTION | eff) Unit
 main = do
   log "Simple arithmetic operations and conversions from Int"
   let two = one + one

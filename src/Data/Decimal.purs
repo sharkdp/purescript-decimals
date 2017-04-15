@@ -43,7 +43,7 @@ import Prelude
 import Data.Maybe (Maybe(..))
 
 -- | An arbitrary precision number.
-foreign import data Decimal ∷ *
+foreign import data Decimal ∷ Type
 
 -- | Convert an integer to a Decimal.
 foreign import fromInt ∷ Int → Decimal
