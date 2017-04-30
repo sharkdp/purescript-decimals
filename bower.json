@@ -23,6 +23,6 @@
     "purescript-psci-support": "^3.0.0",
     "purescript-assert": "^3.0.0",
     "purescript-quickcheck": "^4.0.0",
-    "purescript-numbers": "^4.0.0"
+    "purescript-numbers": "^5.0.0"
   }
 }

@@ -15,7 +15,7 @@ import Control.Monad.Eff.Exception (EXCEPTION())
 import Test.QuickCheck (QC(), quickCheck)
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Data.Int as Int
-import Data.Number ((≅))
+import Data.Number.Approximate ((≅))
 import Math as M
 
 -- | Arbitrary instance for Decimal
