@@ -36,6 +36,8 @@ module Data.Decimal
   , tanh
   , e
   , pi
+  , gamma
+  , factorial
   ) where
 
 import Prelude
@@ -206,3 +208,11 @@ foreign import e ∷ Decimal
 
 -- | Pi, the ratio of a circle's circumference to its diameter.
 foreign import pi ∷ Decimal
+
+-- | The gamma function.
+foreign import gamma ∷ Decimal → Decimal
+
+-- | The factorial function.
+factorial ∷ Decimal → Decimal
+factorial n | n < zero = one / zero
+            | otherwise = gamma $ ceil (n + one)

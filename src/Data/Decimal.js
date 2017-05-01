@@ -210,3 +210,43 @@ exports.tanh = function(x) {
 exports.e = Decimal.exp(1.0);
 
 exports.pi = new Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899');
+
+var p = [
+  676.5203681218851,
+  -1259.1392167224028,
+  771.32342877765313,
+  -176.61502916214059,
+  12.507343278686905,
+  -0.13857109526572012,
+  9.9843695780195716e-6,
+  1.5056327351493116e-7,
+];
+
+exports.gamma = function(z) {
+  var pval, i, x, y, t, zr;
+  var one = new Decimal(1.0);
+  if (z < 0.5) {
+    // Reflection formula)
+    y = Decimal.div(
+          exports.pi,
+          Decimal.mul(Decimal.sin(exports.pi.mul(z)), exports.gamma(one.sub(z))));
+  }
+  else {
+    zr = z.sub(one);
+    x = new Decimal(0.99999999999980993);
+    i = 0;
+    for (i = 0; i < p.length; i++) {
+      pval = p[i];
+      x = x.add(Decimal.div(pval, zr.add(i).add(one)));
+    }
+    t = zr.add(p.length).sub(0.5);
+    y = Decimal.sqrt(exports.pi.mul(2.0))
+          .mul(Decimal.pow(t, zr.add(0.5)))
+          .mul(Decimal.exp(t.neg()))
+          .mul(x);
+  }
+  if (z.isInteger()) {
+    return y.round();
+  }
+  return y;
+};

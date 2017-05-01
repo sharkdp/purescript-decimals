@@ -6,8 +6,8 @@ import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
-                     min, round, sin, sinh, sqrt, tan, tanh, e, pi,
-                     toSignificantDigits, isInteger, isFinite)
+                     min, round, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
+                     toSignificantDigits, isInteger, isFinite, factorial)
 import Data.Maybe (Maybe(..))
 import Test.Assert (ASSERT, assert)
 import Control.Monad.Eff.Random (RANDOM())
@@ -130,3 +130,31 @@ main = do
   assert $ cos pi == - one
   assert $ ln (e `pow` two) == two
 
+  log "gamma"
+  let eps = fromNumber 1.0e-10
+      approxEq yStr x =
+        case fromString yStr of
+          Just y → assert $ abs (x / y - one) < eps
+          Nothing → do
+            log "Could not parse string"
+            assert false
+
+  approxEq "1.24216934450430540491" (gamma (fromNumber 2.4))
+  approxEq "9.51350769866873183629" (gamma (fromNumber 0.1))
+  approxEq "2.65927187288003053999" (gamma (fromNumber (-1.4)))
+  approxEq "2.65927187288003053999" (gamma (fromNumber (-1.4)))
+  approxEq "9.33262154439441526817e+155" (gamma (fromNumber (100.0)))
+
+  log "factorial"
+  assert $ factorial zero == one
+  assert $ factorial one == one
+  assert $ factorial (fromInt 5) == fromInt (2 * 3 * 4 * 5)
+  assert $ factorial (fromInt 10) == fromInt 3628800
+  assert $ factorial (fromInt 10) == fromInt 3628800
+  assert $ factorial (fromInt 15) == fromNumber 1307674368000.0
+  approxEq "2432902008176640000" (factorial (fromInt 20))
+  approxEq "10888869450418352160768000000" (factorial (fromInt 27))
+  approxEq "263130836933693530167218012160000000" (factorial (fromInt 32))
+  approxEq "30414093201713378043612608166064768844377641568960512000000000000" (factorial (fromInt 50))
+
+  log "done"
