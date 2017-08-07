@@ -27,6 +27,7 @@ module Data.Decimal
   , log10
   , max
   , min
+  , modulo
   , pow
   , round
   , sin
@@ -181,6 +182,9 @@ foreign import max ∷ Decimal → Decimal → Decimal
 
 -- | The smaller of two numbers.
 foreign import min ∷ Decimal → Decimal → Decimal
+
+-- | Modulo operation.
+foreign import modulo ∷ Decimal → Decimal → Decimal
 
 -- | Exponentiation for `Decimal`.
 foreign import pow ∷ Decimal → Decimal → Decimal

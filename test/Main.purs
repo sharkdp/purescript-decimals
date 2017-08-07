@@ -6,7 +6,7 @@ import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
-                     min, round, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
+                     min, modulo, round, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
                      toSignificantDigits, isInteger, isFinite, factorial)
 import Data.Maybe (Maybe(..))
 import Test.Assert (ASSERT, assert)
@@ -98,6 +98,16 @@ main = do
   assert $ four `pow` (fromNumber (-0.5)) == one / two
   assert $ three `pow` zero == one
   assert $ zero `pow` zero == one
+
+  log "modulo"
+  assert $ zero `modulo` three == zero
+  assert $ one `modulo` three == one
+  assert $ two `modulo` three == two
+  assert $ three `modulo` three == zero
+  assert $ four `modulo` three == one
+  assert $ (-one) `modulo` three == two
+  assert $ (-three) `modulo` three == zero
+  assert $ one `modulo` (-three) == one
 
   log "Absolute value"
   quickCheck $ \(TestDecimal x) → abs x == if x > zero then x else (-x)

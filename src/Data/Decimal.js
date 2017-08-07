@@ -1,6 +1,7 @@
 var Decimal = require("decimal.js");
 
 Decimal.set({ precision: 30 });
+Decimal.set({ modulo: Decimal.EUCLID });
 
 exports.fromInt = function(x) {
   return new Decimal(x);
@@ -54,6 +55,12 @@ exports.toSignificantDigits = function(d) {
 exports.dAdd = function(x) {
   return function(y) {
     return x.add(y);
+  };
+};
+
+exports.modulo = function(x) {
+  return function(y) {
+    return x.mod(y);
   };
 };
 
