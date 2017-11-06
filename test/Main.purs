@@ -4,7 +4,7 @@ import Prelude hiding (min, max)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
-                     toNumber, toString, acos, acosh, asin, asinh, atan, atanh,
+                     toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, modulo, round, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
                      toSignificantDigits, isInteger, isFinite, factorial)
@@ -52,6 +52,12 @@ main = do
   assert $ fromString "123456789" == Just (fromInt 123456789)
   assert $ fromString "1e7" == Just (fromInt 10000000)
   quickCheck $ \(TestDecimal a) → (fromString <<< toString) a == Just a
+  
+  log "toFixed"
+  let a = fromNumber 123.456789
+  assert $ toFixed 0 a == "123"
+  assert $ toFixed 3 a == "123.457"
+  assert $ toFixed 8 a == "123.45678900"
 
   log "Conversions between String, Int and Decimal should not loose precision"
   quickCheck (\n → fromString (show n) == Just (fromInt n))

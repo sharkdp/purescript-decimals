@@ -38,6 +38,12 @@ exports.toPrecision = function(d) {
   };
 };
 
+exports.toFixed = function(d) {
+    return function(x) {
+        return x.toFixed(d);
+    }
+}
+
 exports.isInteger = function(x) {
   return x.isInteger();
 };
