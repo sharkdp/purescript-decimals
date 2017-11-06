@@ -7,6 +7,7 @@ module Data.Decimal
   , toNumber
   , toString
   , toPrecision
+  , toFixed
   , isFinite
   , isInteger
   , toSignificantDigits
@@ -92,6 +93,11 @@ foreign import toString ∷ Decimal → String
 -- | A representation of the `Decimal` as a `String`, rounded to the given
 -- | number of significant digits
 foreign import toPrecision ∷ Int → Decimal → String
+
+-- | A representation of the `Decimal` as a `String` in fixed-point notation
+-- | rounded to the given number of decimal places. Never returns exponential
+-- | notation. Uses the default rounding mode.
+foreign import toFixed ∷ Int → Decimal → String
 
 -- | Returns true if the value of this `Decimal` is a finite number (not
 -- | infinite, not `NaN`).
