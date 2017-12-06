@@ -25,6 +25,7 @@ module Data.Decimal
   , exp
   , floor
   , ln
+  , log2
   , log10
   , max
   , min
