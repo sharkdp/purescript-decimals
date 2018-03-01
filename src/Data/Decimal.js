@@ -200,6 +200,10 @@ exports.round = function(x) {
   return x.round();
 };
 
+exports.truncated = function(x) {
+  return x.truncated();
+};
+
 exports.sin = function(x) {
   return x.sin();
 };
