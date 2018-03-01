@@ -6,7 +6,7 @@ import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
-                     min, modulo, round, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
+                     min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
                      toSignificantDigits, isInteger, isFinite, factorial)
 import Data.Maybe (Maybe(..))
 import Test.Assert (ASSERT, assert)
@@ -130,6 +130,7 @@ main = do
   testFn ceil M.ceil
   testFn floor M.floor
   testFn round M.round
+  testFn truncated $ \x -> if x >= zero then M.floor x else M.ceil x
   testFn sqrt M.sqrt
   testFn cosh $ \x -> 0.5 * (M.exp x + M.exp (-x))
   testFn sinh $ \x -> 0.5 * (M.exp x - M.exp (-x))
