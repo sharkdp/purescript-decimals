@@ -37,6 +37,7 @@ module Data.Decimal
   , sqrt
   , tan
   , tanh
+  , truncated
   , e
   , pi
   , gamma
@@ -213,6 +214,9 @@ foreign import tan ∷ Decimal → Decimal
 
 -- | Hyperbolic tangent.
 foreign import tanh ∷ Decimal → Decimal
+
+-- | Truncate to an integer by removing the mantissa.
+foreign import truncated ∷ Decimal → Decimal
 
 -- | Euler's number.
 foreign import e ∷ Decimal
