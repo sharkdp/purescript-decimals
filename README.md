@@ -30,9 +30,11 @@ You can install this package via Bower. You will also need
 via `npm`:
 ```
 bower install purescript-decimals
-npm install decimal.js
+npm install
 ```
 For the browser, remember to bundle `decimal.js` with your code.
+
+Check the `package.json` file for the supported versions of `decimal.json`.
 
 ## Development
 ```
