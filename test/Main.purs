@@ -1,22 +1,20 @@
 module Test.Main where
 
 import Prelude hiding (min, max)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
 import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
                      toSignificantDigits, isInteger, isFinite, factorial)
-import Data.Maybe (Maybe(..))
-import Test.Assert (ASSERT, assert)
-import Control.Monad.Eff.Random (RANDOM())
-import Control.Monad.Eff.Exception (EXCEPTION())
-import Test.QuickCheck (QC(), quickCheck)
-import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Data.Int as Int
+import Data.Maybe (Maybe(..))
 import Data.Number.Approximate ((≅))
+import Effect (Effect)
+import Effect.Console (log)
 import Math as M
+import Test.Assert (assert)
+import Test.QuickCheck (quickCheck)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 
 -- | Arbitrary instance for Decimal
 newtype TestDecimal = TestDecimal Decimal
@@ -25,16 +23,16 @@ instance arbitraryDecimal ∷ Arbitrary TestDecimal where
   arbitrary = (TestDecimal <<< fromNumber) <$> arbitrary
 
 -- | Test if a simple function holds before and after converting to Decimal.
-testFn ∷ ∀ eff. (Decimal → Decimal) → (Number → Number) → QC eff Unit
+testFn ∷ (Decimal → Decimal) → (Number → Number) → Effect Unit
 testFn f g = quickCheck (\(TestDecimal x) → toNumber (f x) ≅ (g (toNumber x)))
 
 -- | Test if a binary relation holds before and after converting to Decimal.
-testBinary ∷ ∀ eff. (Decimal → Decimal → Decimal)
+testBinary ∷ (Decimal → Decimal → Decimal)
            → (Number → Number → Number)
-           → QC eff Unit
+           → Effect Unit
 testBinary f g = quickCheck (\x y → toNumber ((fromNumber x) `f` (fromNumber y)) ≅ (x `g` y))
 
-main ∷ ∀ eff. Eff (console ∷ CONSOLE, assert ∷ ASSERT, random ∷ RANDOM, exception ∷ EXCEPTION | eff) Unit
+main ∷ Effect Unit
 main = do
   log "Simple arithmetic operations and conversions from Int"
   let two = one + one
@@ -135,9 +133,9 @@ main = do
   testFn cosh $ \x -> 0.5 * (M.exp x + M.exp (-x))
   testFn sinh $ \x -> 0.5 * (M.exp x - M.exp (-x))
   testFn tanh $ \x -> (M.exp x - M.exp (-x)) / (M.exp x + M.exp (-x))
-  testFn (asinh <<< sinh) id
-  testFn (acosh <<< cosh) id
-  testFn (atanh <<< tanh) id
+  testFn (asinh <<< sinh) identity
+  testFn (acosh <<< cosh) identity
+  testFn (atanh <<< tanh) identity
   testBinary atan2 M.atan2
   testBinary max M.max
   testBinary min M.min
