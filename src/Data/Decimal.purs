@@ -60,7 +60,7 @@ foreign import fromNumber ∷ Number → Decimal
 -- | Converts a Decimal to a Number, possibly resulting in loss of precision.
 foreign import toNumber ∷ Decimal → Number
 
-foreign import fromString' ∷ ∀ a. Maybe a → (a → Maybe a) → String → Maybe Decimal
+foreign import fromStringImpl ∷ ∀ a. Maybe a → (a → Maybe a) → String → Maybe Decimal
 
 -- | Parse a string into a `Decimal`, assuming a decimal representation. Returns
 -- | `Nothing` if the parse fails.
@@ -73,7 +73,7 @@ foreign import fromString' ∷ ∀ a. Maybe a → (a → Maybe a) → String →
 -- | fromString "0.12301928309128183579487598149533"
 -- | ```
 fromString ∷ String → Maybe Decimal
-fromString = fromString' Nothing Just
+fromString = fromStringImpl Nothing Just
 
 foreign import dEquals ∷ Decimal → Decimal → Boolean
 
