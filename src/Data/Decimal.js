@@ -7,7 +7,7 @@ exports.fromInt = function(x) {
   return new Decimal(x);
 };
 
-exports["fromString'"] = function(nothing) {
+exports.fromStringImpl = function(nothing) {
   return function(just) {
     return function(str) {
       try {
