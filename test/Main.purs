@@ -57,7 +57,7 @@ main = do
   assert $ toFixed 3 a == "123.457"
   assert $ toFixed 8 a == "123.45678900"
 
-  log "Conversions between String, Int and Decimal should not loose precision"
+  log "Conversions between String, Int and Decimal should not lose precision"
   quickCheck (\n → fromString (show n) == Just (fromInt n))
   quickCheck (\n → Int.toNumber n == toNumber (fromInt n))
 

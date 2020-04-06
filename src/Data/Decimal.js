@@ -243,7 +243,7 @@ exports.gamma = function(z) {
   var pval, i, x, y, t, zr;
   var one = new Decimal(1.0);
   if (z < 0.5) {
-    // Reflection formula)
+    // Reflection formula
     y = Decimal.div(
           exports.pi,
           Decimal.mul(Decimal.sin(exports.pi.mul(z)), exports.gamma(one.sub(z))));
