@@ -157,7 +157,6 @@ main = do
   approxEq "1.24216934450430540491" (gamma (fromNumber 2.4))
   approxEq "9.51350769866873183629" (gamma (fromNumber 0.1))
   approxEq "2.65927187288003053999" (gamma (fromNumber (-1.4)))
-  approxEq "2.65927187288003053999" (gamma (fromNumber (-1.4)))
   approxEq "9.33262154439441526817e+155" (gamma (fromNumber (100.0)))
 
   log "factorial"
