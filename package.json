@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "decimal.js": "7.1.1"
-  }
+    "decimal.js": "10.3.1"
+  },
+  "type": "module"
 }

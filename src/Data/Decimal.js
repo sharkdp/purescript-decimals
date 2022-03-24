@@ -1,13 +1,13 @@
-var Decimal = require("decimal.js");
+import Decimal from "decimal.js";
 
 Decimal.set({ precision: 30 });
 Decimal.set({ modulo: Decimal.EUCLID });
 
-exports.fromInt = function(x) {
+export function fromInt(x) {
   return new Decimal(x);
-};
+}
 
-exports.fromStringImpl = function(nothing) {
+export function fromStringImpl(nothing) {
   return function(just) {
     return function(str) {
       try {
@@ -18,215 +18,202 @@ exports.fromStringImpl = function(nothing) {
       }
     };
   };
-};
+}
 
-exports.fromNumber = function(x) {
+export function fromNumber(x) {
   return new Decimal(x);
-};
+}
 
-exports.toNumber = function(x) {
+export function toNumber(x) {
   return x.toNumber();
-};
+}
 
-exports.toString = function(x) {
+export function toString(x) {
   return x.toString();
-};
+}
 
-exports.toPrecision = function(d) {
+export function toPrecision(d) {
   return function (x) {
     return x.toPrecision(d);
   };
-};
+}
 
-exports.toFixed = function(d) {
+export function toFixed(d) {
     return function(x) {
         return x.toFixed(d);
     }
 }
 
-exports.isInteger = function(x) {
+export function isInteger(x) {
   return x.isInteger();
-};
+}
 
-exports.isFinite = function(x) {
+export function isFinite(x) {
   return x.isFinite();
-};
+}
 
-exports.toSignificantDigits = function(d) {
+export function toSignificantDigits(d) {
   return function (x) {
     return x.toSignificantDigits(d);
   };
-};
+}
 
-exports.dAdd = function(x) {
+export function dAdd(x) {
   return function(y) {
     return x.add(y);
   };
-};
+}
 
-exports.modulo = function(x) {
+export function modulo(x) {
   return function(y) {
     return x.mod(y);
   };
-};
+}
 
-exports.dMul = function(x) {
+export function dMul(x) {
   return function(y) {
     return x.mul(y);
   };
-};
+}
 
-exports.dSub = function(x) {
+export function dSub(x) {
   return function(y) {
     return x.minus(y);
   };
-};
+}
 
-exports.dDiv = function(x) {
+export function dDiv(x) {
   return function(y) {
     return x.div(y);
   };
-};
+}
 
-exports.dEquals = function(x) {
+export function dEquals(x) {
   return function(y) {
     return x.equals(y);
   };
-};
+}
 
-exports.dCompare = function(x) {
+export function dCompare(x) {
   return function(y) {
     return x.cmp(y);
   };
-};
+}
 
-exports.abs = function(x) {
+export function abs(x) {
   return x.abs();
-};
+}
 
-exports.pow = function(x) {
+export function pow(x) {
   return function(y) {
     return x.pow(y);
   };
-};
+}
 
-exports.exp = function(x) {
+export function exp(x) {
   return x.exp();
-};
+}
 
-exports.acos = function(x) {
+export function acos(x) {
   return x.acos();
-};
+}
 
-exports.abs = function(x) {
-  return x.abs();
-};
-
-exports.acos = function(x) {
-  return x.acos();
-};
-
-exports.acosh = function(x) {
+export function acosh(x) {
   return x.acosh();
-};
+}
 
-exports.asin = function(x) {
+export function asin(x) {
   return x.asin();
-};
+}
 
-exports.asinh = function(x) {
+export function asinh(x) {
   return x.asinh();
-};
+}
 
-exports.atan = function(x) {
+export function atan(x) {
   return x.atan();
-};
+}
 
-exports.atanh = function(x) {
+export function atanh(x) {
   return x.atanh();
-};
+}
 
-exports.atan2 = function(x) {
+export function atan2(x) {
   return function(y) {
     return Decimal.atan2(x, y);
   };
-};
+}
 
-exports.ceil = function(x) {
+export function ceil(x) {
   return x.ceil();
-};
+}
 
-exports.cos = function(x) {
+export function cos(x) {
   return x.cos();
-};
+}
 
-exports.cosh = function(x) {
+export function cosh(x) {
   return x.cosh();
-};
+}
 
-exports.exp = function(x) {
-  return x.exp();
-};
-
-exports.floor = function(x) {
+export function floor(x) {
   return x.floor();
-};
+}
 
-exports.ln = function(x) {
+export function ln(x) {
   return x.ln();
-};
+}
 
-exports.log2 = function(x) {
+export function log2(x) {
   return Decimal.log2(x);
-};
+}
 
-exports.log10 = function(x) {
+export function log10(x) {
   return Decimal.log10(x);
-};
+}
 
-exports.max = function(x) {
+export function max(x) {
   return function(y) {
     return Decimal.max(x, y);
   };
-};
+}
 
-exports.min = function(x) {
+export function min(x) {
   return function(y) {
     return Decimal.min(x, y);
   };
-};
+}
 
-exports.round = function(x) {
+export function round(x) {
   return x.round();
-};
+}
 
-exports.truncated = function(x) {
+export function truncated(x) {
   return x.truncated();
-};
+}
 
-exports.sin = function(x) {
+export function sin(x) {
   return x.sin();
-};
+}
 
-exports.sinh = function(x) {
+export function sinh(x) {
   return x.sinh();
-};
+}
 
-exports.sqrt = function(x) {
+export function sqrt(x) {
   return x.sqrt();
-};
+}
 
-exports.tan = function(x) {
+export function tan(x) {
   return x.tan();
-};
+}
 
-exports.tanh = function(x) {
+export function tanh(x) {
   return x.tanh();
-};
+}
 
-exports.e = Decimal.exp(1.0);
-
-exports.pi = new Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899');
+export var e = Decimal.exp(1.0);
+export var pi = new Decimal('3.14159265358979323846264338327950288419716939937510582097494459230781640628620899');
 
 var p = [
   676.5203681218851,
@@ -239,14 +226,14 @@ var p = [
   1.5056327351493116e-7,
 ];
 
-exports.gamma = function(z) {
+export function gamma(z) {
   var pval, i, x, y, t, zr;
   var one = new Decimal(1.0);
   if (z < 0.5) {
     // Reflection formula
     y = Decimal.div(
-          exports.pi,
-          Decimal.mul(Decimal.sin(exports.pi.mul(z)), exports.gamma(one.sub(z))));
+          pi,
+          Decimal.mul(Decimal.sin(pi.mul(z)), gamma(one.sub(z))));
   }
   else {
     zr = z.sub(one);
@@ -257,7 +244,7 @@ exports.gamma = function(z) {
       x = x.add(Decimal.div(pval, zr.add(i).add(one)));
     }
     t = zr.add(p.length).sub(0.5);
-    y = Decimal.sqrt(exports.pi.mul(2.0))
+    y = Decimal.sqrt(pi.mul(2.0))
           .mul(Decimal.pow(t, zr.add(0.5)))
           .mul(Decimal.exp(t.neg()))
           .mul(x);
@@ -266,4 +253,4 @@ exports.gamma = function(z) {
     return y.round();
   }
   return y;
-};
+}
