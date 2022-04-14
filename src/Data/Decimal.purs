@@ -77,12 +77,12 @@ fromString = fromStringImpl Nothing Just
 
 foreign import dEquals ∷ Decimal → Decimal → Boolean
 
-instance eqDecimal ∷ Eq Decimal where
+instance Eq Decimal where
   eq = dEquals
 
 foreign import dCompare ∷ Decimal → Decimal → Int
 
-instance ordDecimal ∷ Ord Decimal where
+instance Ord Decimal where
   compare x y =
     case dCompare x y of
       1 → GT
@@ -108,13 +108,13 @@ foreign import isFinite ∷ Decimal → Boolean
 -- | Returns true if the value of this `Decimal` is a whole number.
 foreign import isInteger ∷ Decimal → Boolean
 
-instance showDecimal ∷ Show Decimal where
+instance Show Decimal where
   show x = "(fromString \"" <> toString x <> "\")"
 
 foreign import dAdd ∷ Decimal → Decimal → Decimal
 foreign import dMul ∷ Decimal → Decimal → Decimal
 
-instance semiringDecimal ∷ Semiring Decimal where
+instance Semiring Decimal where
   add  = dAdd
   zero = fromInt 0
   mul  = dMul
@@ -122,14 +122,14 @@ instance semiringDecimal ∷ Semiring Decimal where
 
 foreign import dSub ∷ Decimal → Decimal → Decimal
 
-instance ringDecimal ∷ Ring Decimal where
+instance Ring Decimal where
   sub = dSub
 
 foreign import dDiv ∷ Decimal → Decimal → Decimal
 
-instance commutativeRingDecimal ∷ CommutativeRing Decimal
+instance CommutativeRing Decimal
 
-instance euclideanRingDecimal ∷ EuclideanRing Decimal where
+instance EuclideanRing Decimal where
   div = dDiv
   mod _ _ = zero
   degree _ = one
