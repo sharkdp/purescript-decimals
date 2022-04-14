@@ -20,6 +20,7 @@ module Data.Decimal
   , atan2
   , atanh
   , ceil
+  , clamp
   , cos
   , cosh
   , exp
@@ -163,6 +164,9 @@ foreign import atanh ∷ Decimal → Decimal
 
 -- | Rounded to next whole number in the direction of `+inf`.
 foreign import ceil ∷ Decimal → Decimal
+
+-- | Clamp a number to the range delineated by the first two parameters.
+foreign import clamp ∷ Decimal -> Decimal -> Decimal -> Decimal
 
 -- | Cosine.
 foreign import cos ∷ Decimal → Decimal

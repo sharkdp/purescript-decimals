@@ -1,7 +1,7 @@
 module Test.Main where
 
-import Prelude hiding (min, max)
-import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString,
+import Prelude hiding (clamp, min, max)
+import Data.Decimal (Decimal, abs, clamp, fromInt, fromNumber, pow, fromString,
                      toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
@@ -115,6 +115,10 @@ main = do
 
   log "Absolute value"
   quickCheck $ \(TestDecimal x) → abs x == if x > zero then x else (-x)
+
+  log "clamp"
+  assert $ clamp three four one == three
+  assert $ clamp zero two zero == zero
 
   log "Other functions"
   testFn acos M.acos
