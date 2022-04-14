@@ -100,6 +100,14 @@ exports.dCompare = function(x) {
   };
 };
 
+exports.clamp = function(min) {
+  return function(max) {
+    return function(x) {
+      return x.clamp(min, max);
+    };
+  }
+};
+
 exports.abs = function(x) {
   return x.abs();
 };
