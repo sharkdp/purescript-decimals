@@ -135,6 +135,9 @@ instance EuclideanRing Decimal where
   mod _ _ = zero
   degree _ = one
 
+instance DivisionRing Decimal where
+  recip = dDiv one
+
 -- | Round to the given number of significant digits.
 foreign import toSignificantDigits ∷ Int → Decimal → Decimal
 
