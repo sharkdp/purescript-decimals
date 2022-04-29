@@ -4,7 +4,6 @@
   , "console"
   , "effect"
   , "integers"
-  , "math"
   , "maybe"
   , "numbers"
   , "prelude"
