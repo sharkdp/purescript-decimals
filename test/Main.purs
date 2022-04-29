@@ -1,8 +1,11 @@
-module Test.Main where
+module Test.Main (main) where
 
-import Prelude hiding (min, max)
-
-import Data.Decimal (Decimal, abs, fromInt, fromNumber, pow, fromString, toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh, atan2, ceil, cos, cosh, exp, floor, ln, log10, max, min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma, toSignificantDigits, isInteger, isFinite, factorial)
+import Prelude hiding (clamp, min, max)
+import Data.Decimal (Decimal, abs, clamp, fromInt, fromNumber, pow, fromString,
+                     toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
+                     atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
+                     min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
+                     toSignificantDigits, isInteger, isFinite, factorial)
 import Data.Int as Int
 import Data.Maybe (Maybe(..))
 import Data.Number as N
@@ -16,18 +19,18 @@ import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 -- | Arbitrary instance for Decimal
 newtype TestDecimal = TestDecimal Decimal
 
-instance arbitraryDecimal ∷ Arbitrary TestDecimal where
+instance Arbitrary TestDecimal where
   arbitrary = (TestDecimal <<< fromNumber) <$> arbitrary
 
 -- | Test if a simple function holds before and after converting to Decimal.
 testFn ∷ (Decimal → Decimal) → (Number → Number) → Effect Unit
-testFn f g = quickCheck (\(TestDecimal x) → toNumber (f x) ≅ (g (toNumber x)))
+testFn f g = quickCheck \(TestDecimal x) → toNumber (f x) ≅ g (toNumber x)
 
 -- | Test if a binary relation holds before and after converting to Decimal.
 testBinary ∷ (Decimal → Decimal → Decimal)
            → (Number → Number → Number)
            → Effect Unit
-testBinary f g = quickCheck (\x y → toNumber ((fromNumber x) `f` (fromNumber y)) ≅ (x `g` y))
+testBinary f g = quickCheck \x y → toNumber ((fromNumber x) `f` (fromNumber y)) ≅ (x `g` y)
 
 main ∷ Effect Unit
 main = do
@@ -46,8 +49,8 @@ main = do
   assert $ fromString "2.1" == Just (fromNumber 2.1)
   assert $ fromString "123456789" == Just (fromInt 123456789)
   assert $ fromString "1e7" == Just (fromInt 10000000)
-  quickCheck $ \(TestDecimal a) → (fromString <<< toString) a == Just a
-  
+  quickCheck \(TestDecimal a) → (fromString <<< toString) a == Just a
+
   log "toFixed"
   let a = fromNumber 123.456789
   assert $ toFixed 0 a == "123"
@@ -55,8 +58,8 @@ main = do
   assert $ toFixed 8 a == "123.45678900"
 
   log "Conversions between String, Int and Decimal should not lose precision"
-  quickCheck (\n → fromString (show n) == Just (fromInt n))
-  quickCheck (\n → Int.toNumber n == toNumber (fromInt n))
+  quickCheck \n → fromString (show n) == Just (fromInt n)
+  quickCheck \n → Int.toNumber n == toNumber (fromInt n)
 
   log "Binary relations between integers should hold before and after converting to Decimal"
   testBinary (+) (+)
@@ -111,7 +114,11 @@ main = do
   assert $ one `modulo` (-three) == one
 
   log "Absolute value"
-  quickCheck $ \(TestDecimal x) → abs x == if x > zero then x else (-x)
+  quickCheck \(TestDecimal x) → abs x == if x > zero then x else -x
+
+  log "clamp"
+  assert $ clamp three four one == three
+  assert $ clamp zero two zero == zero
 
   log "Other functions"
   testFn acos N.acos
@@ -125,11 +132,11 @@ main = do
   testFn ceil N.ceil
   testFn floor N.floor
   testFn round N.round
-  testFn truncated $ \x -> if x >= zero then N.floor x else N.ceil x
+  testFn truncated \x -> if x >= zero then N.floor x else N.ceil x
   testFn sqrt N.sqrt
-  testFn cosh $ \x -> 0.5 * (N.exp x + N.exp (-x))
-  testFn sinh $ \x -> 0.5 * (N.exp x - N.exp (-x))
-  testFn tanh $ \x -> (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
+  testFn cosh \x -> 0.5 * (N.exp x + N.exp (-x))
+  testFn sinh \x -> 0.5 * (N.exp x - N.exp (-x))
+  testFn tanh \x -> (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
   testFn (asinh <<< sinh) identity
   testFn (acosh <<< cosh) identity
   testFn (atanh <<< tanh) identity
@@ -139,7 +146,7 @@ main = do
   assert $ log10 (fromInt 1000) == fromInt 3
 
   log "e and pi"
-  assert $ cos pi == - one
+  assert $ cos pi == -one
   assert $ ln (e `pow` two) == two
 
   log "gamma"

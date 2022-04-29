@@ -100,6 +100,14 @@ export function dCompare(x) {
   };
 }
 
+export function clamp(min) {
+  return function(max) {
+    return function(x) {
+      return x.clamp(min, max);
+    };
+  }
+};
+
 export function abs(x) {
   return x.abs();
 }
