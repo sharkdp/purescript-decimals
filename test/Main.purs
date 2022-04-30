@@ -8,10 +8,10 @@ import Data.Decimal (Decimal, abs, clamp, fromInt, fromNumber, pow, fromString,
                      toSignificantDigits, isInteger, isFinite, factorial)
 import Data.Int as Int
 import Data.Maybe (Maybe(..))
+import Data.Number as N
 import Data.Number.Approximate ((≅))
 import Effect (Effect)
 import Effect.Console (log)
-import Math as M
 import Test.Assert (assert)
 import Test.QuickCheck (quickCheck)
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
@@ -121,28 +121,28 @@ main = do
   assert $ clamp zero two zero == zero
 
   log "Other functions"
-  testFn acos M.acos
-  testFn asin M.asin
-  testFn atan M.atan
-  testFn cos M.cos
-  testFn sin M.sin
-  testFn tan M.tan
-  testFn exp M.exp
-  testFn ln M.log
-  testFn ceil M.ceil
-  testFn floor M.floor
-  testFn round M.round
-  testFn truncated \x -> if x >= zero then M.floor x else M.ceil x
-  testFn sqrt M.sqrt
-  testFn cosh \x -> 0.5 * (M.exp x + M.exp (-x))
-  testFn sinh \x -> 0.5 * (M.exp x - M.exp (-x))
-  testFn tanh \x -> (M.exp x - M.exp (-x)) / (M.exp x + M.exp (-x))
+  testFn acos N.acos
+  testFn asin N.asin
+  testFn atan N.atan
+  testFn cos N.cos
+  testFn sin N.sin
+  testFn tan N.tan
+  testFn exp N.exp
+  testFn ln N.log
+  testFn ceil N.ceil
+  testFn floor N.floor
+  testFn round N.round
+  testFn truncated \x -> if x >= zero then N.floor x else N.ceil x
+  testFn sqrt N.sqrt
+  testFn cosh \x -> 0.5 * (N.exp x + N.exp (-x))
+  testFn sinh \x -> 0.5 * (N.exp x - N.exp (-x))
+  testFn tanh \x -> (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
   testFn (asinh <<< sinh) identity
   testFn (acosh <<< cosh) identity
   testFn (atanh <<< tanh) identity
-  testBinary atan2 M.atan2
-  testBinary max M.max
-  testBinary min M.min
+  testBinary atan2 N.atan2
+  testBinary max N.max
+  testBinary min N.min
   assert $ log10 (fromInt 1000) == fromInt 3
 
   log "e and pi"
