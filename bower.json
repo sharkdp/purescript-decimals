@@ -17,12 +17,12 @@
     "output"
   ],
   "dependencies": {
-    "purescript-maybe": "^5.0.0"
+    "purescript-maybe": "^6.0.0"
   },
   "devDependencies": {
-    "purescript-psci-support": "^5.0.0",
-    "purescript-assert": "^5.0.0",
-    "purescript-quickcheck": "^7.0.0",
-    "purescript-numbers": "^8.0.0"
+    "purescript-psci-support": "^6.0.0",
+    "purescript-assert": "^6.0.0",
+    "purescript-quickcheck": "^8.0.0",
+    "purescript-numbers": "^9.0.0"
   }
 }
