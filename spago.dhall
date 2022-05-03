@@ -7,7 +7,6 @@
   , "maybe"
   , "numbers"
   , "prelude"
-  , "psci-support"
   , "quickcheck"
   ]
 , packages = ./packages.dhall
