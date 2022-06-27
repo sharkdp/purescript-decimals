@@ -169,7 +169,7 @@ foreign import atanh ∷ Decimal → Decimal
 foreign import ceil ∷ Decimal → Decimal
 
 -- | Clamp a number to the range delineated by the first two parameters.
-foreign import clamp ∷ Decimal -> Decimal -> Decimal -> Decimal
+foreign import clamp ∷ Decimal → Decimal → Decimal → Decimal
 
 -- | Cosine.
 foreign import cos ∷ Decimal → Decimal
