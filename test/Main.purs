@@ -132,11 +132,11 @@ main = do
   testFn ceil N.ceil
   testFn floor N.floor
   testFn round N.round
-  testFn truncated \x -> if x >= zero then N.floor x else N.ceil x
+  testFn truncated \x → if x >= zero then N.floor x else N.ceil x
   testFn sqrt N.sqrt
-  testFn cosh \x -> 0.5 * (N.exp x + N.exp (-x))
-  testFn sinh \x -> 0.5 * (N.exp x - N.exp (-x))
-  testFn tanh \x -> (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
+  testFn cosh \x → 0.5 * (N.exp x + N.exp (-x))
+  testFn sinh \x → 0.5 * (N.exp x - N.exp (-x))
+  testFn tanh \x → (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
   testFn (asinh <<< sinh) identity
   testFn (acosh <<< cosh) identity
   testFn (atanh <<< tanh) identity

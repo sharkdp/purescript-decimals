@@ -3,9 +3,11 @@ import Decimal from "decimal.js";
 Decimal.set({ precision: 30 });
 Decimal.set({ modulo: Decimal.EUCLID });
 
-export function fromInt(x) {
+export function fromNumber(x) {
   return new Decimal(x);
 }
+
+export { fromNumber as fromInt };
 
 export function fromStringImpl(nothing) {
   return function(just) {
@@ -18,10 +20,6 @@ export function fromStringImpl(nothing) {
       }
     };
   };
-}
-
-export function fromNumber(x) {
-  return new Decimal(x);
 }
 
 export function toNumber(x) {
