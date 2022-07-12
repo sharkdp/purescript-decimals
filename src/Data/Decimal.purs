@@ -14,6 +14,12 @@ module Data.Decimal
   , abs
   , acos
   , acosh
+  , acot
+  , acoth
+  , acsc
+  , acsch
+  , asec
+  , asech
   , asin
   , asinh
   , atan
@@ -23,6 +29,10 @@ module Data.Decimal
   , clamp
   , cos
   , cosh
+  , cot
+  , coth
+  , csc
+  , csch
   , exp
   , floor
   , ln
@@ -33,6 +43,8 @@ module Data.Decimal
   , modulo
   , pow
   , round
+  , sec
+  , sech
   , sin
   , sinh
   , sqrt
@@ -238,3 +250,59 @@ foreign import gamma ∷ Decimal → Decimal
 factorial ∷ Decimal → Decimal
 factorial n | n < zero = one / zero
             | otherwise = gamma $ ceil (n + one)
+
+-- | Inverse secant.
+asec ∷ Decimal → Decimal
+asec x = acos (one / x)
+
+-- | Inverse cosecant.
+acsc ∷ Decimal → Decimal
+acsc x = asin (one / x)
+
+-- | Inverse cotangent.
+-- |
+-- | Note that this is a multivalued function. The definition here
+-- | refers to the principal value of 'acot' without a discontinuity at x=0, and a domain
+-- | of (0, π).
+-- | See https://mathworld.wolfram.com/InverseCotangent.html for more information.
+acot ∷ Decimal → Decimal
+acot x =
+  if x > zero
+    then atan (one / x)
+    else atan (one / x) + pi
+
+-- | Secant.
+sec ∷ Decimal → Decimal
+sec x = one / cos x
+
+-- | Cosecant.
+csc ∷ Decimal → Decimal
+csc x = one / sin x
+
+-- | Cotangent.
+cot ∷ Decimal → Decimal
+cot x = one / tan x
+
+-- | Hyperbolic cosecant.
+csch ∷ Decimal → Decimal
+csch x = one / sinh x
+
+-- | Hyperbolic secant.
+sech ∷ Decimal → Decimal
+sech x = one / cosh x
+
+-- | Hyperbolic cotangent.
+coth ∷ Decimal → Decimal
+coth x = one / tanh x
+
+-- | Inverse hyperbolic cosecant.
+acsch ∷ Decimal → Decimal
+acsch x = asinh (one / x)
+
+-- | Inverse hyperbolic secant.
+asech ∷ Decimal → Decimal
+asech x = acosh (one / x)
+
+-- | Inverse hyperbolic cotangent.
+acoth ∷ Decimal → Decimal
+acoth x = atanh (one / x)

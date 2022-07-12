@@ -2,7 +2,8 @@ module Test.Main (main) where
 
 import Prelude hiding (clamp, min, max)
 import Data.Decimal (Decimal, abs, clamp, fromInt, fromNumber, pow, fromString,
-                     toNumber, toString, toFixed, acos, acosh, asin, asinh, atan, atanh,
+                     toNumber, toString, toFixed, csc, sec, cot, acsc, asec, acot, csch,
+                     sech, coth, acsch, asech, acoth, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
                      toSignificantDigits, isInteger, isFinite, factorial)
@@ -15,6 +16,8 @@ import Effect.Console (log)
 import Test.Assert (assert)
 import Test.QuickCheck (quickCheck)
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Data.Foldable (for_)
+import Data.Tuple.Nested ((/\))
 
 -- | Arbitrary instance for Decimal
 newtype TestDecimal = TestDecimal Decimal
@@ -31,6 +34,9 @@ testBinary ∷ (Decimal → Decimal → Decimal)
            → (Number → Number → Number)
            → Effect Unit
 testBinary f g = quickCheck \x y → toNumber ((fromNumber x) `f` (fromNumber y)) ≅ (x `g` y)
+
+assertAlmostEqual ∷ Decimal → Decimal → Effect Unit
+assertAlmostEqual x y = assert $ toNumber x ≅ toNumber y
 
 main ∷ Effect Unit
 main = do
@@ -137,9 +143,32 @@ main = do
   testFn cosh \x → 0.5 * (N.exp x + N.exp (-x))
   testFn sinh \x → 0.5 * (N.exp x - N.exp (-x))
   testFn tanh \x → (N.exp x - N.exp (-x)) / (N.exp x + N.exp (-x))
-  testFn (asinh <<< sinh) identity
-  testFn (acosh <<< cosh) identity
-  testFn (atanh <<< tanh) identity
+
+  for_ [sin /\ csc, cos /\ sec, tan /\ cot, sinh /\ csch, cosh /\ sech, tanh /\ coth] \(f /\ f') →
+    quickCheck \(TestDecimal x) → toNumber (f x * f' x) ≅ 1.0
+
+  for_ [sin /\ asin, cos /\ acos, tan /\ atan, sinh /\ asinh, tanh /\ atanh, sech /\ asech, csch /\ acsch] \(f /\ f') → do
+    testFn (f <<< f') identity
+    testFn (f' <<< f) identity
+
+  -- We need custom tests for these functions since the inverse function in
+  -- each pair may fail the above test, because it may be given a value outside
+  -- of its domain.
+  assertAlmostEqual (fromNumber 2.823) (sec (asec (fromNumber 2.823)))
+  assertAlmostEqual (fromNumber 3.1) (asec (sec (fromNumber 3.1)))
+
+  assertAlmostEqual (fromNumber 1.5) (csc (acsc (fromNumber 1.5)))
+  assertAlmostEqual (fromNumber 0.4) (acsc (csc (fromNumber 0.4)))
+
+  assertAlmostEqual (fromNumber 2.8) (cot (acot (fromNumber 2.8)))
+  assertAlmostEqual (fromNumber 1.33) (acot (cot (fromNumber 1.33)))
+
+  assertAlmostEqual (fromNumber 5.0) (cosh (acosh (fromNumber 5.0)))
+  assertAlmostEqual (fromNumber 3.4) (acosh (cosh (fromNumber 3.4)))
+
+  assertAlmostEqual (fromNumber 2.0) (coth (acoth (fromNumber 2.0)))
+  assertAlmostEqual (fromNumber 1.414) (acoth (coth (fromNumber 1.414)))
+
   testBinary atan2 N.atan2
   testBinary max N.max
   testBinary min N.min
