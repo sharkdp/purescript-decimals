@@ -56,6 +56,12 @@ export function toSignificantDigits(d) {
   };
 }
 
+export function toDecimalPlaces(d) {
+  return function (x) {
+    return x.toDecimalPlaces(d);
+  }
+}
+
 export function dAdd(x) {
   return function(y) {
     return x.add(y);

@@ -6,7 +6,7 @@ import Data.Decimal (Decimal, abs, clamp, fromInt, fromNumber, pow, fromString,
                      sech, coth, acsch, asech, acoth, acos, acosh, asin, asinh, atan, atanh,
                      atan2, ceil, cos, cosh, exp, floor, ln, log10, max,
                      min, modulo, round, truncated, sin, sinh, sqrt, tan, tanh, e, pi, gamma,
-                     toSignificantDigits, isInteger, isFinite, factorial)
+                     toSignificantDigits, toDecimalPlaces, isInteger, isFinite, factorial)
 import Data.Int as Int
 import Data.Maybe (Maybe(..))
 import Data.Number as N
@@ -92,6 +92,15 @@ main = do
   assert $ toSignificantDigits 2 a == fromNumber 120.0
   assert $ toSignificantDigits 4 a == fromNumber 123.5
   assert $ toSignificantDigits 20 a == a
+
+  log "toDecimalPlaces"
+  let a = fromNumber 12.34567
+  assert $ toDecimalPlaces 0 a == fromInt 12
+  assert $ toDecimalPlaces 1 a == fromNumber 12.3
+  assert $ toDecimalPlaces 2 a == fromNumber 12.35
+  assert $ toDecimalPlaces 3 a == fromNumber 12.346
+  assert $ toDecimalPlaces 4 a == fromNumber 12.3457
+  assert $ toDecimalPlaces 5 a == a
 
   log "isInteger"
   assert $ isInteger (fromNumber 118327913791272.0)
