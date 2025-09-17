@@ -11,6 +11,7 @@ module Data.Decimal
   , isFinite
   , isInteger
   , toSignificantDigits
+  , toDecimalPlaces
   , abs
   , acos
   , acosh
@@ -152,6 +153,9 @@ instance DivisionRing Decimal where
 
 -- | Round to the given number of significant digits.
 foreign import toSignificantDigits ∷ Int → Decimal → Decimal
+
+-- | Round to the given number of decimals places.
+foreign import toDecimalPlaces :: Int -> Decimal -> Decimal
 
 -- | The absolute value.
 foreign import abs ∷ Decimal → Decimal
